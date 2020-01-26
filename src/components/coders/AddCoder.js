@@ -1,33 +1,28 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { addCoder, updateCoder, setCurrent } from "../../actions/coderActions";
 
-const AddCoder = ({ coders, setCoders, current, setCurrent }) => {
+const AddCoder = ({ coders, addCoder, current, setCurrent, updateCoder }) => {
   useEffect(() => {
     if (current !== null) {
       setCoder(current);
     } else {
-      setCoder({});
+      setCoder({ firstName: "", lastName: "" });
     }
   }, [coders, current]);
-  const [coder, setCoder] = useState({});
+  const [coder, setCoder] = useState({ firstName: "", lastName: "" });
 
   const onSubmit = e => {
     e.preventDefault();
     if (current === null) {
       coder.id = coders.length + 1;
-      setCoders([...coders, coder]);
+      addCoder(coder);
       clearForm();
     } else {
       updateCoder(coder);
       clearCurrent();
       clearForm();
     }
-  };
-
-  const updateCoder = coderToUpdate => {
-    const coder = coders.map(coder =>
-      coder.id === coderToUpdate.id ? coderToUpdate : coder
-    );
-    setCoders(coder);
   };
 
   const clearCurrent = () => setCurrent(null);
@@ -71,4 +66,10 @@ const AddCoder = ({ coders, setCoders, current, setCurrent }) => {
   );
 };
 
-export default AddCoder;
+const mapStateToProps = state => ({
+  coders: state.coders.coders,
+  current: state.coders.current
+});
+export default connect(mapStateToProps, { addCoder, updateCoder, setCurrent })(
+  AddCoder
+);

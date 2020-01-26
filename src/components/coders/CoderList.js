@@ -1,18 +1,20 @@
 import React from "react";
+import { connect } from "react-redux";
+import { deleteCoder, setCurrent } from "../../actions/coderActions";
 
-const CoderList = ({ coder, handleEdit, handleDelete }) => {
+const CoderList = ({ coder, setCurrent, deleteCoder }) => {
   return (
     <div>
       <ul className="collection">
         <li className="collection-item">
           {coder.firstName} {coder.lastName}
           <i
-            class="material-icons right"
-            onClick={() => handleDelete(coder.id)}
+            className="material-icons right"
+            onClick={() => deleteCoder(coder.id)}
           >
             delete
           </i>
-          <i class="material-icons right" onClick={() => handleEdit(coder)}>
+          <i className="material-icons right" onClick={() => setCurrent(coder)}>
             edit
           </i>
         </li>
@@ -21,4 +23,4 @@ const CoderList = ({ coder, handleEdit, handleDelete }) => {
   );
 };
 
-export default CoderList;
+export default connect(null, { deleteCoder, setCurrent })(CoderList);
