@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { addCoder, updateCoder, setCurrent } from "../../actions/coderActions";
+import {
+  addCoder,
+  updateCoder,
+  clearCurrent
+} from "../../actions/coderActions";
 
-const AddCoder = ({ coders, addCoder, current, setCurrent, updateCoder }) => {
+const AddCoder = ({ coders, addCoder, current, clearCurrent, updateCoder }) => {
   useEffect(() => {
     if (current !== null) {
       setCoder(current);
@@ -25,7 +29,6 @@ const AddCoder = ({ coders, addCoder, current, setCurrent, updateCoder }) => {
     }
   };
 
-  const clearCurrent = () => setCurrent(null);
   const clearForm = () => setCoder({ firstName: "", lastName: "" });
 
   const onChange = e => {
@@ -70,6 +73,9 @@ const mapStateToProps = state => ({
   coders: state.coders.coders,
   current: state.coders.current
 });
-export default connect(mapStateToProps, { addCoder, updateCoder, setCurrent })(
-  AddCoder
-);
+export default connect(mapStateToProps, {
+  addCoder,
+  updateCoder,
+
+  clearCurrent
+})(AddCoder);

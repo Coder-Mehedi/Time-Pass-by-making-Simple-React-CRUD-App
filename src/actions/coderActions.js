@@ -20,3 +20,7 @@ export const deleteCoder = id => {
 export const setCurrent = coder => {
   return { type: SET_CURRENT, payload: coder };
 };
+
+export const clearCurrent = () => {
+  return { type: CLEAR_CURRENT };
+};
